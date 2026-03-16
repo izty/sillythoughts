@@ -55,10 +55,10 @@ html,
 body {
   margin: 0;
   padding: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-    "Segoe UI", sans-serif;
+  font-family: 'Gravitas One', serif;
   color: var(--text);
   min-height: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -213,16 +213,19 @@ button {
   border: 1px solid #eda6b7;
   background: #f7dae1;
   color: #111827;
+  min-height: 2.1em;
+  font-size: 1rem;
 }
 
 .picker-go-button {
-  padding: 0.35rem 1.1rem;
+  padding: 0.25rem 0.6rem;
   border-radius: var(--radius-full);
   border: 1px solid #eda6b7;
   background: #f7dae1;
   color: #111827;
   cursor: pointer;
-  font-size: 0.8rem;
+  font-size: 1rem;
+  min-height: 2.1em;
   text-transform: uppercase;
   letter-spacing: 0.14em;
   box-shadow: 0 3px 10px rgba(15, 23, 42, 0.8);
@@ -279,7 +282,6 @@ button {
   cursor: pointer;
   font-size: 0.85rem;
   font-weight: 500;
-  font-family: 'Kanit', sans-serif;
   transition: background 0.12s ease, border-color 0.12s ease,
     transform 0.05s ease, box-shadow 0.12s ease, color 0.12s ease;
 }
@@ -328,7 +330,6 @@ button {
   background: transparent;
   font: inherit;
   color: inherit;
-  font-family: 'Kanit', sans-serif;
   box-sizing: border-box;
   position: relative;
   z-index: 1;
