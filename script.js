@@ -178,7 +178,9 @@
         displayDay = cellIndex - leadingDays + 1;
       }
 
-      cell.textContent = displayDay;
+
+      // Default: just the number
+      let dayContent = document.createTextNode(displayDay);
 
       if (
         isCurrentMonth &&
@@ -201,14 +203,23 @@
 
         if (entriesByDate && entriesByDate[isoDate]) {
           cell.classList.add("has-entry");
+          // Wrap the number in a span for circle styling
+          const span = document.createElement("span");
+          span.className = "entry-circle";
+          span.textContent = displayDay;
+          dayContent = span;
+          cell.addEventListener("click", () => {
+            const target = `entry.html?date=${encodeURIComponent(isoDate)}`;
+            window.location.href = target;
+          });
+        } else {
+          cell.classList.add("no-entry");
         }
-
-        cell.addEventListener("click", () => {
-          const target = `entry.html?date=${encodeURIComponent(isoDate)}`;
-          window.location.href = target;
-        });
       }
 
+      // Clear and append the content (span or text)
+      cell.textContent = "";
+      cell.appendChild(dayContent);
       gridEl.appendChild(cell);
     }
   }

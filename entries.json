@@ -1,71 +1,15 @@
 {
-  "2026-01-01": {
-    "title": "New year, new scribbles",
-    "dateLabel": "1 January 2026",
-    "theme": "sunrise",
-    "mood": "hopeful",
+  "2026-03-16": {
+    "title": "A New Beginning",
+    "dateLabel": "16 March 2026",
     "paragraphs": [
-      "Placeholder entry for the very first day of the year. Replace this text in entries.json with whatever the day felt like to you."
+      "Today, I created this website!"
     ],
-    "images": [
-      {
-        "src": "images/placeholder-sunrise.jpg",
-        "alt": "Soft sunrise placeholder image"
-      }
-    ]
-  },
-  "2026-02-14": {
-    "title": "Tiny heart-shaped thoughts",
-    "dateLabel": "14 February 2026",
-    "theme": "forest",
-    "mood": "soft",
-    "paragraphs": [
-      "Placeholder entry for mid‑February. Maybe today is about friendships, chocolate, or just enjoying your own company."
-    ],
-    "images": [
-      {
-        "src": "images/placeholder-forest.jpg",
-        "alt": "Soft green forest placeholder image"
-      }
-    ]
-  },
-  "2026-03-15": {
-    "title": "Silly March musings",
-    "dateLabel": "15 March 2026",
-    "theme": "rainy",
-    "mood": "thoughtful",
-    "paragraphs": [
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, urna eu tincidunt consectetur, nisi nisl aliquet nunc, eget placerat lectus justo eu lacus.",
-      "Curabitur et lectus id risus pretium viverra. Phasellus gravida, felis sed dapibus laoreet, est ipsum feugiat orci, eu rhoncus justo risus id tortor.",
-      "Suspendisse potenti. Integer fermentum nunc a risus viverra, non bibendum ipsum fermentum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae."
-    ],
-    "images": [
-      {
-        "src": "images/placeholder-rainy.jpg",
-        "alt": "Rainy window placeholder image"
-      }
-    ]
-  },
-  "2026-06-01": {
-    "title": "First spark of summer",
-    "dateLabel": "1 June 2026",
-    "theme": "sunrise",
-    "mood": "warm",
-    "paragraphs": [
-      "Placeholder entry for the start of June. Maybe the sun felt different today, or maybe your playlist did."
-    ],
-    "images": [
-      {
-        "src": "images/placeholder-sunrise.jpg",
-        "alt": "Warm golden hour placeholder image"
-      }
-    ]
+    "images": []
   },
   "2026-10-31": {
     "title": "Little ghosts of ideas",
     "dateLabel": "31 October 2026",
-    "theme": "forest",
-    "mood": "spooky",
     "paragraphs": [
       "Placeholder entry for the end of October. Use this day for costumes, candies, or quiet movie nights."
     ],
@@ -79,8 +23,6 @@
   "2026-12-31": {
     "title": "Soft closing credits",
     "dateLabel": "31 December 2026",
-    "theme": "rainy",
-    "mood": "reflective",
     "paragraphs": [
       "Placeholder entry for the last day of the year. Write a tiny recap, a big monologue, or just one sentence you want to remember."
     ],

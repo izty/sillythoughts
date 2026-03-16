@@ -7,11 +7,12 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <section id="title-section">
+    <h1 class="fade-title">Silly Thoughts Diary</h1>
+  </section>
   <header class="site-header">
-    <h1>Silly Thoughts Diary</h1>
-    <p class="tagline">Click a day to open your memories.</p>
+    <h1 style="display:none;">Silly Thoughts Diary</h1>
   </header>
-
   <main class="calendar-page">
     <section class="calendar-controls">
       <button id="prev-month" aria-label="Previous month">&larr;</button>
@@ -64,8 +65,8 @@
         <!-- Weekday headers and days will be rendered by script.js -->
       </div>
     </section>
+    </main>
   </main>
-
   <script src="script.js"></script>
 </body>
 </html>
