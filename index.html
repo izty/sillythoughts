@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Silly Thoughts Diary Calendar</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <h1>Silly Thoughts Diary</h1>
+    <p class="tagline">Click a day to open your memories.</p>
+  </header>
+
+  <main class="calendar-page">
+    <section class="calendar-controls">
+      <button id="prev-month" aria-label="Previous month">&larr;</button>
+      <div class="calendar-current">
+        <span id="calendar-month"></span>
+        <span id="calendar-year"></span>
+        <div class="calendar-selects">
+          <select id="month-select" aria-label="Select month"></select>
+          <select id="year-select" aria-label="Select year"></select>
+        </div>
+      </div>
+      <button id="next-month" aria-label="Next month">&rarr;</button>
+    </section>
+
+    <section class="calendar-container">
+      <div class="calendar-grid" aria-label="Monthly calendar">
+        <!-- Weekday headers and days will be rendered by script.js -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Hosted on GitHub Pages. Crafted with care.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+

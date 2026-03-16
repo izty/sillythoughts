@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Diary Entry – Silly Thoughts</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="entry-layout">
+    <main class="entry-main">
+      <header class="entry-header">
+        <div id="entry-date" class="entry-date"></div>
+        <h1 id="entry-title" class="entry-title">Loading entry…</h1>
+        <div id="entry-meta" class="entry-meta"></div>
+      </header>
+
+      <section id="entry-body" class="entry-body">
+        <p>Fetching your diary entry…</p>
+      </section>
+
+      <section id="entry-gallery" class="entry-gallery"></section>
+
+      <a class="entry-back" href="index.html">Back to calendar</a>
+      <div class="entry-footer-note">Silly Thoughts Diary</div>
+    </main>
+
+    <script>
+      (function () {
+        function getQueryParam(name) {
+          const params = new URLSearchParams(window.location.search);
+          return params.get(name);
+        }
+
+        function formatDateLabel(isoDate) {
+          const [year, month, day] = isoDate.split("-").map(Number);
+          const date = new Date(year, month - 1, day);
+          if (Number.isNaN(date.getTime())) {
+            return isoDate;
+          }
+          return date.toLocaleDateString(undefined, {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
+        }
+
+        const dateParam = getQueryParam("date");
+        const dateEl = document.getElementById("entry-date");
+        const titleEl = document.getElementById("entry-title");
+        const metaEl = document.getElementById("entry-meta");
+        const bodyEl = document.getElementById("entry-body");
+        const galleryEl = document.getElementById("entry-gallery");
+
+        if (!dateParam) {
+          document.body.classList.add("theme-rainy");
+          dateEl.textContent = "";
+          titleEl.textContent = "No date selected";
+          bodyEl.innerHTML =
+            "<p>Open this page from the calendar so I know which day to show.</p>";
+          return;
+        }
+
+        fetch("entries.json")
+          .then(function (response) {
+            if (!response.ok) {
+              throw new Error("entries.json not found");
+            }
+            return response.json();
+          })
+          .then(function (allEntries) {
+            const entry = allEntries[dateParam];
+            if (!entry) {
+              document.body.classList.add("theme-rainy");
+              dateEl.textContent = formatDateLabel(dateParam);
+              titleEl.textContent = "No entry yet";
+              metaEl.innerHTML =
+                '<span class="pill">Empty page</span><span class="pill">Click this day again once you write it</span>';
+              bodyEl.innerHTML =
+                "<p>You have not written anything for this day yet. Edit <code>entries.json</code> to add your thoughts.</p>";
+              galleryEl.innerHTML = "";
+              return;
+            }
+
+            if (entry.theme) {
+              document.body.classList.add("theme-" + entry.theme);
+            } else {
+              document.body.classList.add("theme-forest");
+            }
+
+            dateEl.textContent =
+              entry.dateLabel || formatDateLabel(dateParam);
+            titleEl.textContent = entry.title || "Untitled day";
+
+            const pills = [];
+            if (entry.theme) {
+              pills.push(
+                '<span class="pill">Theme: ' +
+                  entry.theme.charAt(0).toUpperCase() +
+                  entry.theme.slice(1) +
+                  "</span>"
+              );
+            }
+            if (entry.mood) {
+              pills.push('<span class="pill">Mood: ' + entry.mood + "</span>");
+            }
+            metaEl.innerHTML = pills.join("");
+
+            const paragraphs = Array.isArray(entry.paragraphs)
+              ? entry.paragraphs
+              : [];
+            if (paragraphs.length === 0) {
+              bodyEl.innerHTML =
+                "<p>This is a placeholder entry. Edit <code>entries.json</code> to write your story for this date.</p>";
+            } else {
+              bodyEl.innerHTML = paragraphs
+                .map(function (text) {
+                  return "<p>" + text + "</p>";
+                })
+                .join("");
+            }
+
+            const images = Array.isArray(entry.images) ? entry.images : [];
+            if (images.length === 0) {
+              galleryEl.innerHTML = "";
+            } else {
+              galleryEl.innerHTML = images
+                .map(function (img) {
+                  var alt = img.alt || "Diary image";
+                  var src = img.src;
+                  return (
+                    '<img src="' +
+                    src +
+                    '" alt="' +
+                    alt +
+                    '" loading="lazy" />'
+                  );
+                })
+                .join("");
+            }
+          })
+          .catch(function () {
+            document.body.classList.add("theme-rainy");
+            dateEl.textContent = formatDateLabel(dateParam);
+            titleEl.textContent = "Entry data unavailable";
+            bodyEl.innerHTML =
+              "<p>I could not load <code>entries.json</code>. Make sure it exists in the same folder as this page on GitHub Pages.</p>";
+            galleryEl.innerHTML = "";
+          });
+      })();
+    </script>
+  </body>
+</html>
+
