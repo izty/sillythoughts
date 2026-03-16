@@ -18,12 +18,45 @@
       <div class="calendar-current">
         <span id="calendar-month"></span>
         <span id="calendar-year"></span>
-        <div class="calendar-selects">
-          <select id="month-select" aria-label="Select month"></select>
-          <select id="year-select" aria-label="Select year"></select>
-        </div>
+        <button
+          id="calendar-picker-toggle"
+          class="calendar-picker-button"
+          type="button"
+          aria-label="Open date picker"
+        >
+          <img
+            src="icons/calendar_icon.png"
+            alt="Calendar icon"
+            class="calendar-picker-icon"
+          />
+        </button>
       </div>
       <button id="next-month" aria-label="Next month">&rarr;</button>
+    </section>
+
+    <section
+      id="calendar-picker-panel"
+      class="calendar-picker-panel"
+      aria-label="Jump to date"
+      hidden
+    >
+      <div class="picker-row">
+        <label class="picker-field">
+          <span>Year</span>
+          <select id="picker-year"></select>
+        </label>
+        <label class="picker-field">
+          <span>Month</span>
+          <select id="picker-month"></select>
+        </label>
+        <label class="picker-field">
+          <span>Day</span>
+          <select id="picker-day"></select>
+        </label>
+        <button id="picker-go" class="picker-go-button" type="button">
+          Go
+        </button>
+      </div>
     </section>
 
     <section class="calendar-container">

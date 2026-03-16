@@ -19,10 +19,14 @@
   const gridEl = document.querySelector(".calendar-grid");
   const monthEl = document.getElementById("calendar-month");
   const yearEl = document.getElementById("calendar-year");
-  const monthSelectEl = document.getElementById("month-select");
-  const yearSelectEl = document.getElementById("year-select");
   const prevBtn = document.getElementById("prev-month");
   const nextBtn = document.getElementById("next-month");
+  const pickerToggleBtn = document.getElementById("calendar-picker-toggle");
+  const pickerPanel = document.getElementById("calendar-picker-panel");
+  const pickerYear = document.getElementById("picker-year");
+  const pickerMonth = document.getElementById("picker-month");
+  const pickerDay = document.getElementById("picker-day");
+  const pickerGo = document.getElementById("picker-go");
 
   if (
     !gridEl ||
@@ -30,8 +34,12 @@
     !yearEl ||
     !prevBtn ||
     !nextBtn ||
-    !monthSelectEl ||
-    !yearSelectEl
+    !pickerToggleBtn ||
+    !pickerPanel ||
+    !pickerYear ||
+    !pickerMonth ||
+    !pickerDay ||
+    !pickerGo
   ) {
     return;
   }
@@ -73,21 +81,8 @@
       });
   }
 
-  function syncSelectsToView() {
-    monthSelectEl.value = String(viewMonth);
-    yearSelectEl.value = String(viewYear);
-  }
-
-  function populateSelects() {
-    monthSelectEl.innerHTML = "";
-    monthNames.forEach(function (name, index) {
-      const opt = document.createElement("option");
-      opt.value = String(index);
-      opt.textContent = name;
-      monthSelectEl.appendChild(opt);
-    });
-
-    yearSelectEl.innerHTML = "";
+  function populatePicker() {
+    pickerYear.innerHTML = "";
     const baseYear = today.getFullYear();
     const startYear = baseYear - 5;
     const endYear = baseYear + 5;
@@ -95,10 +90,31 @@
       const opt = document.createElement("option");
       opt.value = String(y);
       opt.textContent = String(y);
-      yearSelectEl.appendChild(opt);
+      if (y === viewYear) {
+        opt.selected = true;
+      }
+      pickerYear.appendChild(opt);
     }
 
-    syncSelectsToView();
+    pickerMonth.innerHTML = "";
+    monthNames.forEach(function (name, index) {
+      const opt = document.createElement("option");
+      opt.value = String(index);
+      opt.textContent = name;
+      if (index === viewMonth) {
+        opt.selected = true;
+      }
+      pickerMonth.appendChild(opt);
+    });
+
+    pickerDay.innerHTML = "";
+    const maxDay = daysInMonth(viewYear, viewMonth);
+    for (let d = 1; d <= maxDay; d += 1) {
+      const opt = document.createElement("option");
+      opt.value = String(d);
+      opt.textContent = String(d);
+      pickerDay.appendChild(opt);
+    }
   }
 
   function renderCalendar() {
@@ -204,7 +220,9 @@
     } else {
       viewMonth -= 1;
     }
-    syncSelectsToView();
+    if (!pickerPanel.hasAttribute("hidden")) {
+      populatePicker();
+    }
     renderCalendar();
   });
 
@@ -215,27 +233,62 @@
     } else {
       viewMonth += 1;
     }
-    syncSelectsToView();
+    if (!pickerPanel.hasAttribute("hidden")) {
+      populatePicker();
+    }
     renderCalendar();
   });
 
-  monthSelectEl.addEventListener("change", () => {
-    const newMonth = parseInt(monthSelectEl.value, 10);
-    if (!Number.isNaN(newMonth)) {
-      viewMonth = newMonth;
-      renderCalendar();
+  pickerToggleBtn.addEventListener("click", () => {
+    if (pickerPanel.hasAttribute("hidden")) {
+      populatePicker();
+      pickerPanel.removeAttribute("hidden");
+    } else {
+      pickerPanel.setAttribute("hidden", "true");
     }
   });
 
-  yearSelectEl.addEventListener("change", () => {
-    const newYear = parseInt(yearSelectEl.value, 10);
+  pickerYear.addEventListener("change", () => {
+    const newYear = parseInt(pickerYear.value, 10);
     if (!Number.isNaN(newYear)) {
       viewYear = newYear;
+      populatePicker();
       renderCalendar();
     }
   });
 
-  populateSelects();
+  pickerMonth.addEventListener("change", () => {
+    const newMonth = parseInt(pickerMonth.value, 10);
+    if (!Number.isNaN(newMonth)) {
+      viewMonth = newMonth;
+      populatePicker();
+      renderCalendar();
+    }
+  });
+
+  pickerDay.addEventListener("change", () => {
+    // just keep value in sync; navigation happens on Go button
+  });
+
+  pickerGo.addEventListener("click", () => {
+    const year = parseInt(pickerYear.value, 10);
+    const monthIndex = parseInt(pickerMonth.value, 10);
+    const day = parseInt(pickerDay.value, 10);
+    if (
+      Number.isNaN(year) ||
+      Number.isNaN(monthIndex) ||
+      Number.isNaN(day)
+    ) {
+      return;
+    }
+    const yearStr = String(year);
+    const monthStr = pad2(monthIndex + 1);
+    const dayStr = pad2(day);
+    const isoDate = `${yearStr}-${monthStr}-${dayStr}`;
+    const target = `entry.html?date=${encodeURIComponent(isoDate)}`;
+    window.location.href = target;
+  });
+
   ensureEntriesLoaded().finally(renderCalendar);
 })();
 
